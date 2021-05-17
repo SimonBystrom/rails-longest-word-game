@@ -18,6 +18,7 @@
     <input id="word-submit" type="text" class="form-control" name="word" value= <%= params[:word] %> >
     <button type="submit" class="btn btn-primary mt-3">Submit Word</button>
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag :current_letters, @letters %>
   </div>
 
 </form>
