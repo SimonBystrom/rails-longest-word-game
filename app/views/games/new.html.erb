@@ -1,0 +1,23 @@
+<h1>New Game</h1>
+
+<div class="d-flex justify-content-between" style="height: 68px">
+  <% @letters.each do |letter|  %>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= letter %>
+        </h5>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<form action="/score" method="POST">
+  <div class="form-group mt-5">
+    <label for="word-submit">Submit your word</label>
+    <input id="word-submit" type="text" class="form-control" name="word" value= <%= params[:word] %> >
+    <button type="submit" class="btn btn-primary mt-3">Submit Word</button>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  </div>
+
+</form>
