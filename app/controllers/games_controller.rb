@@ -12,31 +12,21 @@ class GamesController < ApplicationController
     # write logic for game
     # 1 get the  current letters from the letters arr
     @current_letters = params[:current_letters].split(' ')
-    @word = params[:word].split('')
+    @word = params[:word].downcase.split('')
 
     url = "https://wagon-dictionary.herokuapp.com/#{params[:word]}"
-    @is_word = JSON.parse(URI.open(url).read)["found"]
+    opened_url = URI.open(url).read
+    @is_word = JSON.parse(opened_url)['found']
 
-
-
-    if @is_word
-      @check = @word.all? do |letter|
-        @current_letters.include?(letter)
-        @current_letters.count(letter) >= @word.count(letter)
+    @msg =
+      if @is_word
+        @check = @word.all? do |letter|
+          @current_letters.include?(letter)
+          @current_letters.count(letter) >= @word.count(letter)
+        end
+        @check ? "#{params[:word].upcase} was a great guess!" : "#{params[:word].upcase} cant be built with #{params[:current_letters]}"
+      else
+        "#{params[:word].upcase} is not a word"
       end
-      @check ? @msg = "#{params[:word]} was a great guess!" : @msg = "Not in the grid"
-    elsif !@is_word
-      @msg = "Not a word"
-    end
-
-      # check ? @msg = "#{params[:word]} was a great guess!" : @msg = "#{params[:word]} is not included in the letters!"
-
-    #   elsif is_word?
-    #       params[:word]
-    #   else
-    #     "not a word"
-    #   end
-    # }
-    p @msg
   end
 end
